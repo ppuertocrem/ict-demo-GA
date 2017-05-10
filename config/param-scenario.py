@@ -2,11 +2,13 @@
 t_set_network = 20  # [deg.C]
 t_lake = 10  # [deg.C]
 flow_network = 0.5  # [m3/s]
+flow_lake = 2.5  # [m3/s]
 
 # Heating heat-pump and heating needs
 t_heating = 70  # [deg.C]
 flow_heating = 1.0  # [m3/s]
 flow_heating_sec = 1.0  # [m3/s]
+p_max = 10000  # [kW] (high default value before optimisation)
 
 # Cooling heat-pump and cooling needs
 t_cooling = 2  # [deg.C]

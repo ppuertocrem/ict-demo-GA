@@ -1,51 +1,124 @@
 {
   "nodes": {
-    "HP-lake": {
+    "hp_lake": {
       "inputs": ["t_ret"],
-      "outputs": ["t_sup", "p_elec_hp_lake"]
+      "outputs": ["t_sup", "p_elec_hp_lake", "t_out_lake"]
     },
-    "HP-heat": {
+    "hp_heat": {
       "inputs": ["t_sup_heat", "t_ret_heat_sec"],
       "outputs": ["t_ret_heat", "t_sup_heat_sec", "p_elec_hp_heat"]
     },
-    "HP-cool": {
+    "hp_cool": {
       "inputs": ["t_sup_cool", "t_ret_cool_sec"],
-      "outputs": ["t_ret_cool", "t_sup_cool_sec", "p_elec_hp_cool"
+      "outputs": ["t_ret_cool", "t_sup_cool_sec", "p_elec_hp_cool"]
     },
-    "thermal-network": {
+    "thermal_network": {
       "inputs": ["t_sup", "t_ret_heat", "t_ret_cool"],
       "outputs": ["t_ret", "t_sup_heat", "t_sup_cool"]
+    },
+    "heating_need": {
+      "inputs": ["t_sup_heat_sec"],
+      "outputs": ["t_ret_heat_sec", "p_gas"]
+    },
+    "cooling_need": {
+      "inputs": ["t_sup_cool_sec"],
+      "outputs": ["t_ret_cool_sec"]
+    },
+    "power_grid": {
+      "inputs": ["p_elec_hp_lake", "p_elec_hp_heat", "p_elec_hp_cool"],
+      "outputs": ["p_elec_hp_total"]
     }
+
   },
   "links": {
     "l1": {
       "out": {
-        "node":"A",
-        "attr": "ta"
+        "node":"hp_lake",
+        "attr": "t_sup"
       },
       "in": {
-        "node":"C",
-        "attr": "ta"
+        "node":"thermal_network",
+        "attr": "t_sup"
       }
     },
     "l2": {
       "out": {
-        "node": "B",
-        "attr": "tb"
+        "node":"thermal_network",
+        "attr": "t_ret"
       },
       "in": {
-        "node": "C",
-        "attr": "tb"
+        "node":"hp_lake",
+        "attr": "t_ret"
       }
     },
     "l3": {
       "out": {
-        "node":"C",
-        "attr": "set"
+        "node":"hp_heat",
+        "attr": "t_ret_heat"
       },
       "in": {
-        "node":"A",
-        "attr": "set"
+        "node":"thermal_network",
+        "attr": "t_ret_heat"
+      }
+    },
+    "l4": {
+      "out": {
+        "node":"thermal_network",
+        "attr": "t_sup_heat"
+      },
+      "in": {
+        "node":"hp_heat",
+        "attr": "t_sup_heat"
+      }
+    },
+    "l5": {
+      "out": {
+        "node":"hp_cool",
+        "attr": "t_ret_cool"
+      },
+      "in": {
+        "node":"thermal_network",
+        "attr": "t_ret_cool"
+      }
+    },
+    "l6": {
+      "out": {
+        "node":"thermal_network",
+        "attr": "t_sup_cool"
+      },
+      "in": {
+        "node":"hp_cool",
+        "attr": "t_sup_cool"
+      }
+    },
+    "l7": {
+      "out": {
+        "node":"hp_lake",
+        "attr": "p_elec_hp_lake"
+      },
+      "in": {
+        "node":"power_grid",
+        "attr": "p_elec_hp_lake"
+      }
+    },
+    "l8": {
+      "out": {
+        "node":"hp_heat",
+        "attr": "p_elec_hp_heat"
+      },
+      "in": {
+        "node":"power_grid",
+        "attr": "p_elec_hp_heat"
+      }
+    },
+    "l9": {
+      "out": {
+        "node":"hp_cool",
+        "attr": "p_elec_hp_cool"
+      },
+      "in": {
+        "node":"power_grid",
+        "attr": "p_elec_hp_cool"
       }
     }
   }
