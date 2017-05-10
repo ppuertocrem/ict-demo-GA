@@ -5,3 +5,10 @@ def process_optim(graph_possible, operations_possible, needs, io_constr_fun, obj
   and objective function. Determine technology design with max values of optimal flows.
   """
   return graph_choice, design, operation
+  
+
+def design_from_raw_optim_results(flows):
+  """
+  Extract design for technology nodes from optimal flows results.
+  """
+  return design
