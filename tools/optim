@@ -1,0 +1,2 @@
+def process_optim(graph_possible, operations_possible, needs, io_constr_fun, obj)
+  return graph_choice, design, operation
