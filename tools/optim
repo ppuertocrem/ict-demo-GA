@@ -1,2 +1,3 @@
-def process_optim(graph_possible, operations_possible, needs, io_constr_fun, obj)
+def process_optim(graph_possible, operations_possible, needs, io_constr_fun, obj_fun):
+  """Reduce possible energy flows between technology options graph to a choosen technology graph, choosing optimal operation given needs, input/outputs nodes models and objective function."""
   return graph_choice, design, operation
