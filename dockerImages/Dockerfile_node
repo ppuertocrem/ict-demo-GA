@@ -1,0 +1,22 @@
+# Python 3.5 (for pyfmi)
+FROM continuumio/miniconda3:4.0.5
+
+# Remove: ImportError: No module named 'setuptools.config'
+RUN pip install --ignore-installed -U setuptools
+
+RUN conda install -y -c chria pyfmi=2.4
+
+RUN mkdir code
+
+WORKDIR code
+
+RUN git clone -b develop https://github.com/ppuertocrem/obnl.git
+RUN pip install --no-cache-dir -r obnl/requirements.txt
+
+RUN cd obnl && python setup.py install
+
+RUN git clone https://github.com/ppuertocrem/ict-demo-GA.git
+RUN pip install --no-cache-dir -r ict-demo-GA/requirements.txt
+
+# CMD ["/bin/bash"]
+ENTRYPOINT ["/opt/conda/bin/python", "ict-demo-GA/models_wrap/thermal_network.py"]
